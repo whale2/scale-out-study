@@ -1,0 +1,11 @@
+.classpath
+.idea/
+.project
+application.properties
+grailsw
+grailsw.bat
+target/
+test/
+tstapp.iml
+web-app/
+wrapper/
