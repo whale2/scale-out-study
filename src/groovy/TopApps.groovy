@@ -37,7 +37,7 @@ class TopApps {
         }
 
 
-        TreeSet<TopApp> topApps = new TreeSet<>(TopApp.getScoreComparator())
+        TreeSet<TopApp> topApps = new TreeSet<TopApp>(TopApp.getScoreComparator())
 
         vrScore.rows().each { row ->
 
@@ -79,7 +79,7 @@ class TopApps {
             apps[row.key()] = row.value()
         }
 
-        TreeSet<TopApp> topApps = new TreeSet<>(TopApp.getVisitsComparator())
+        TreeSet<TopApp> topApps = new TreeSet<TopApp>(TopApp.getVisitsComparator())
 
         vrScore.rows().each { row ->
 

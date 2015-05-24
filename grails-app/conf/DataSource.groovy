@@ -57,7 +57,7 @@ environments {
 */
 grails {
     cassandra {
-        contactPoints = "cassandra0"
+        contactPoints = "cassandra1,cassandra0"
         port = 9042
         authenticator = "PasswordAuthenticator"
         authProvider = "PasswordAuthenticator"
