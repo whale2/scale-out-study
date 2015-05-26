@@ -2,6 +2,7 @@ package tstapp
 
 import com.couchbase.client.java.document.JsonLongDocument
 import static groovyx.net.http.ContentType.JSON
+import grails.converters.JSON
 
 class MobileAppController {
 
@@ -33,7 +34,7 @@ class MobileAppController {
 
         def newApp = new MobileApp(appName: params.appName, shortDescr: params.shortDescr,
                 fullDescr: params.fullDescr, appAuthor: params.appAuthor,
-                appTags: params.appTags.split(','), appScore: 0,
+                appTags: params.appTags.split(','), appScores: 0, appVotes: 0,
                 nScreenShots: hosts.length, visitCounter: 0)
         newApp.insert()
 
@@ -100,13 +101,42 @@ class MobileAppController {
             return
         }
 
+        app.displayScore = app.appScores / app.appVotes
         // Get and increment counter from couchBase
-        JsonLongDocument cnt = couchBucket.getCounterBucket().counter(id, 1, 1)
+        JsonLongDocument cnt = couchBucket.getVisitsBucket().counter(id, 1, 1)
         Long visitCounter = cnt.content()
 
         app.visitCounter = visitCounter
 
         [app:app]
+    }
+
+    def addScore() {
+
+        def id = params.id
+        def newScore = params.rating
+
+        // Increment counters for number of ratings and add a value to rating itself
+        // Both are inplemented using couchbase counters for better consistency
+
+        boolean success = true
+
+        couchBucket.getScoresBucket.counter(id, newScore, newScore)
+        couchBucket.getVotesBucket.counter(id, 1, 1)
+
+        // Now update app info in cassandra
+        def app = MobileApp.get(id)
+        if (app == null) {
+            success = false
+        }
+        else {
+            app.appScores += newScore
+            app.appVisits ++
+            app.save()
+            success = true
+        }
+
+        return render(text: [success:success] as JSON, contentType:'text/json')
     }
 
 }

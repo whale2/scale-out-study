@@ -3,7 +3,9 @@ package tstapp
 class MobileApp {
 
     String appName
-    Float appScore
+    Long appVotes
+    Long appScores
+    Float displayScore
     String shortDescr
     String fullDescr
     String appAuthor
@@ -12,7 +14,7 @@ class MobileApp {
 
     Set<String> appTags
 
-    static transients = [ "visitCounter" ]
+    static transients = [ "visitCounter", "displayScore" ]
 
     static constraints = {
     }
