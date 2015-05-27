@@ -19,16 +19,39 @@
         }
     });
 
+    $("#allStarsDiv").on('mouseleave', renderScore);
+
     $(".starDiv").on('click', function() {
 
-        var s = $(this).children("div").attr("sequence");
+        var s = Number($(this).children("div").attr("sequence")) + 1;
+        userScore = s;
         $.ajax({
             url: "/tstapp/mobileApp/addScore/" + appId + "?rating=" + s,
-
-        }).done(reloadScore());
+            complete: reloadScore(),
+        });
     });
 
+    renderScore();
  });
 
- function reloadScore() {}
+ function renderScore() {
+
+   $("#appScore").val(appScore);
+     $("#scoreStar_" + i).removeClass("silverStar")
+   for(var i = 0; i < userScore; i ++)
+     $("#scoreStar_" + i).addClass("goldStar");
+ }
+
+ function reloadScore() {
+
+    $.ajax({
+        url: "/tstapp/mobileApp/fetchScore/" + appId,
+        dataType: "json",
+        success: function(response) {
+            appScore = response.appScore;
+            renderScore();
+        }
+    });
+
+ }
 

@@ -53,7 +53,6 @@ grails.project.dependency.resolution = {
         // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
         test "org.grails:grails-datastore-test-support:1.0-grails-2.3"
         compile "com.couchbase.client:java-client:2.1.3"
-        compile "net.sf.jmimemagic:jmimemagic:0.1.4"
         //compile ":ajax-uploader:1.1"
     }
 
@@ -67,6 +66,7 @@ grails.project.dependency.resolution = {
         compile ':cassandra:1.0.0-M01'
         compile ":ajax-uploader:1.1"
         compile ":rest:0.8"
+        compile ':cookie:1.2'
 
         // plugins needed at runtime but not for compilation
         //runtime ":hibernate:3.6.10.16" // or ":hibernate4:4.3.5.4"

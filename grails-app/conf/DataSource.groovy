@@ -63,8 +63,8 @@ grails {
         authProvider = "PasswordAuthenticator"
         username = "primary_user"
         password = "scr890psw"
-        dbCreate = "recreate-drop-unused"
-        schemaAction = "recreate-drop-unused"
+        //dbCreate = "recreate-drop-unused"
+        //schemaAction = "recreate-drop-unused"
         keyspace {
             name = "tstapp"
             action = "create-drop"

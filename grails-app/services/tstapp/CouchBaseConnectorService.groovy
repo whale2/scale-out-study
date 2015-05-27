@@ -23,19 +23,25 @@ class CouchBaseConnectorService {
     CouchBaseConnectorService() {
         println "Connecting to couchbase..."
         try {
-            Cluster cluster = CouchbaseCluster.create("couchbase0", "couchbase1")
+            Cluster cluster = CouchbaseCluster.create("couchbase1.tst", "couchbase0.tst")
 
-            visitsBucket = cluster.openBucket("visits",30, TimeUnit.SECONDS)
+            scoresBucket = cluster.openBucket("scores", 30, TimeUnit.SECONDS)
+            println "score bucket ok"
+
+            Cluster cluster2 = CouchbaseCluster.create("couchbase0.tst", "couchbase1.tst")
+            visitsBucket = cluster2.openBucket("visits",30, TimeUnit.SECONDS)
             println "visits bucket ok"
 
             // Docs says it is resourse-consuming, but I can't work around this bug in other ways
             // Hmm, it works with 2-node cluster. Good for me
-            //Cluster cluster2 = CouchbaseCluster.create("couchbase0")
-            scoresBucket = cluster.openBucket("score", 30, TimeUnit.SECONDS)
-            println "score bucket ok"
-            votesBucket = cluster.openBucket("votes", 30, TimeUnit.SECONDS)
+            // Not anymore :(
+
+
+            Cluster cluster3 = CouchbaseCluster.create("couchbase1.tst", "couchbase0.tst")
+            votesBucket = cluster3.openBucket("votes", 30, TimeUnit.SECONDS)
             println "votes bucket ok"
-            appsBucket = cluster.openBucket("apps", 30, TimeUnit.SECONDS)
+            Cluster cluster4 = CouchbaseCluster.create("couchbase0.tst", "couchbase1.tst")
+            appsBucket = cluster4.openBucket("apps", 30, TimeUnit.SECONDS)
             println "votes bucket ok"
 
         } catch (Exception e) {
@@ -46,11 +52,11 @@ class CouchBaseConnectorService {
 
         println "opened bucket " + visitsBucket.bucketManager().info().name() + ", bucket placed on " +
                 visitsBucket.bucketManager().info().nodeCount() + " nodes"
-        println "opened bucket " + scoresBucket.bucketManager().info().name() + ", cluster running on " +
+        println "opened bucket " + scoresBucket.bucketManager().info().name() + ", bucket placed on " +
                 scoresBucket.bucketManager().info().nodeCount() + " nodes"
-        println "opened bucket " + votesBucket.bucketManager().info().name() + ", cluster running on " +
+        println "opened bucket " + votesBucket.bucketManager().info().name() + ", bucket placed on " +
                 votesBucket.bucketManager().info().nodeCount() + " nodes"
-        println "opened bucket " + appsBucket.bucketManager().info().name() + ", cluster running on " +
+        println "opened bucket " + appsBucket.bucketManager().info().name() + ", bucket placed on " +
                 appsBucket.bucketManager().info().nodeCount() + " nodes"
     }
 }

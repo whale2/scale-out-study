@@ -6,6 +6,7 @@ class MobileApp {
     Long appVotes
     Long appScores
     Float displayScore
+    Integer userScore
     String shortDescr
     String fullDescr
     String appAuthor
@@ -14,7 +15,7 @@ class MobileApp {
 
     Set<String> appTags
 
-    static transients = [ "visitCounter", "displayScore" ]
+    static transients = [ "visitCounter", "displayScore", "userScore" ]
 
     static constraints = {
     }

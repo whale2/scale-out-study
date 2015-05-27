@@ -15,11 +15,6 @@ class TopApps {
         /  get scores (and all app data from couchScoreBucket using a view)
         /  get counters
         /
-        /  couchScoreBucket view should return - [ score, [ app id, app name, app icon, app author ] ]
-        /  couchCounterBucket view should return [ app id, visitCounter ]
-        /
-        /  We will build list using TreeSet where we will use counters as secondary sort
-        /  criteria. I.e. in two apps with score=3.5, the one with greater visitCounter is considered greater
         /
         /  build app list
         */
@@ -48,7 +43,8 @@ class TopApps {
         def realScores = new Float[1000]
         vrVotes.rows().each { row ->
 
-            realScores[row.key()] = scores[row.key()] / row.value().getLong()
+            def votes = row.value().getLong()
+            realScores[row.key()] = votes == 0 ? 0 : (scores[row.key()] / votes)
         }
 
         realScores = realScores.sort { a, b -> a.value <=> b.value }
@@ -58,7 +54,7 @@ class TopApps {
         realScores.each { id, score ->
 
             if (i > 100) return
-            def jApp = couchBucket.getAppsBucket.get(id)
+            JsonObject jApp = couchBucket.getAppsBucket.get(id)
             topApps[i++] = new TopApp( appId: id, shortDescr: jApp.getString("shortDescr"),
                 author: jApp.getString("author"), score: score, visits: visits[id])
         }
@@ -99,7 +95,8 @@ class TopApps {
         def realScores = new Float[1000]
         vrVotes.rows().each { row ->
 
-            realScores[row.key()] = scores[row.key()] / row.value().getLong()
+            dev votes = row.value().getLong()
+            realScores[row.key()] = votes == 0 ? 0 : (scores[row.key()] / votes)
         }
 
         visits = visits.sort { a, b -> a.value <=> b.value }
