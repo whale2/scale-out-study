@@ -25,3 +25,31 @@
 .goldStar {
   background: url("../images/star2s.png");
 }
+
+#userHasVoted {
+  font-size: 10px;
+}
+
+.appPage {
+  padding: 4px;
+}
+
+#appNameDiv {
+  font-size: 24px;
+  margin: 8px;
+}
+
+#shortDescrDiv {
+  font-size: 16px;
+  margin-top: 12px;
+}
+
+#fullDescrDiv {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+#screenshotsDiv {
+  margin-top: 12px;
+}

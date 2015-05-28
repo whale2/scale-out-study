@@ -96,7 +96,7 @@ class MobileAppController {
         }
 
         // Get application details from Cassandra
-        def app = MobileApp.get(id)
+        MobileApp app = MobileApp.get(id)
         if (app == null) {
             render(view: "notfound")
             return
@@ -110,26 +110,11 @@ class MobileAppController {
         app.visitCounter = visitCounter
 
         // Get user score from Cassandra
-        def userID = cookieService.getCookie('tstapp_user')
-        User currentUser = User.get(userID)
+        User currentUser = User.findUserByCookie(cookieService)
 
-        def userAppScore
-        if (currentUser != null) {
-            userAppScore = currentUser.appScores == null ? null : currentUser.appScores[id]
-            if (userAppScore == null)
-                userAppScore = 0
-        }
-        else {
-            // No cookie - let's create new user and set cookie
-
-            currentUser = new User(appScores: [:])
-            currentUser.insert()
-
-            cookieService.setCookie('tstapp_user', currentUser.id.toString(), 600)
-            userAppScore = 0
-        }
-
-        app.userScore = userAppScore
+        app.userScore = currentUser.appScores[id]
+        if (app.userScore == null)
+            app.userScore = 0
 
         [app:app]
     }
@@ -142,7 +127,6 @@ class MobileAppController {
         // Increment counters for number of ratings and add a value to rating itself
         // Both are inplemented using couchbase counters for better consistency
 
-        boolean success = true
 
         // Check if this app is present in Couchbase
         // However this check is postponed while development is going on
@@ -161,34 +145,24 @@ class MobileAppController {
         // Now update app info in cassandra
         MobileApp app = MobileApp.get(id)
         if (app == null) {
-            success = false
+            return render(text: [ appScore: 0 ] as JSON, contentType:'text/json')
         }
         else {
             app.appScores += newScore
             app.appVotes ++
-            app.save()
-            success = true
+            app.update([flush:true])
         }
 
-        // Now save
+        // Now save users vote
+        User currentUser = User.findUserByCookie(cookieService)
 
-        return render(text: [ success:success ] as JSON, contentType:'text/json')
+        currentUser.appendToAppScores([ (id) : newScore ])
+        currentUser.update()
+
+        def newAppScore = app.appScores / app.appVotes
+
+        return render(text: [ appScore: newAppScore ] as JSON, contentType:'text/json')
     }
 
-    def fetchScore() {
-
-        def id = params.id
-
-        // Get app score from Cassandra. Minimal overhead as it happens only when score is updated
-        MobileApp m = MobileApp.get(id)
-
-        def score
-        if (m.appVotes == null || m.appVotes == 0)
-            score = 0
-        else
-            score = m.appScores / m.appVotes
-
-        return render(text: [ appScore: score ] as JSON, contentType: 'text/json')
-    }
 
 }

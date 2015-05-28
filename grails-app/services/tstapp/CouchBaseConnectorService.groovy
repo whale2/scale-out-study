@@ -42,7 +42,7 @@ class CouchBaseConnectorService {
             println "votes bucket ok"
             Cluster cluster4 = CouchbaseCluster.create("couchbase0.tst", "couchbase1.tst")
             appsBucket = cluster4.openBucket("apps", 30, TimeUnit.SECONDS)
-            println "votes bucket ok"
+            println "apps bucket ok"
 
         } catch (Exception e) {
             print "Failed opening bucket: "
