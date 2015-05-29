@@ -2,10 +2,10 @@ import tstapp.AppScreenshots
 
 class BootStrap {
 
-    def grailsApplication
+    def fillBuckets
 
     def init = { servletContext ->
-
+        fillBuckets.fill()
     }
 
     def destroy = {

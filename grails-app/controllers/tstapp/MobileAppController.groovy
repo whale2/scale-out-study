@@ -9,7 +9,10 @@ class MobileAppController {
     def couchBucket
     def cookieService
 
-    def index() { }
+    def index() {
+
+
+    }
 
     def addapp() {
         render(view: "addapp")

@@ -3,6 +3,9 @@ package tstapp
 import com.couchbase.client.java.Cluster
 import com.couchbase.client.java.CouchbaseBucket
 import com.couchbase.client.java.CouchbaseCluster
+import com.couchbase.client.java.document.JsonDocument
+import com.couchbase.client.java.document.JsonLongDocument
+import com.couchbase.client.java.document.json.JsonObject
 
 import java.util.concurrent.TimeUnit
 
@@ -26,7 +29,7 @@ class CouchBaseConnectorService {
             Cluster cluster = CouchbaseCluster.create("couchbase1.tst", "couchbase0.tst")
 
             scoresBucket = cluster.openBucket("scores", 30, TimeUnit.SECONDS)
-            println "score bucket ok"
+            println "scores bucket ok"
 
             Cluster cluster2 = CouchbaseCluster.create("couchbase0.tst", "couchbase1.tst")
             visitsBucket = cluster2.openBucket("visits",30, TimeUnit.SECONDS)
@@ -58,5 +61,6 @@ class CouchBaseConnectorService {
                 votesBucket.bucketManager().info().nodeCount() + " nodes"
         println "opened bucket " + appsBucket.bucketManager().info().name() + ", bucket placed on " +
                 appsBucket.bucketManager().info().nodeCount() + " nodes"
+
     }
 }
