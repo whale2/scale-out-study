@@ -8,10 +8,17 @@ class MobileAppController {
 
     def couchBucket
     def cookieService
+    def TopApps
 
     def index() {
 
+        def apps = TopApps.appListByScore()
 
+        apps.each { app ->
+            if (app == null) return
+            println app.dump()
+        }
+        [apps:apps]
     }
 
     def addapp() {
