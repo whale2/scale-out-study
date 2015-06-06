@@ -176,5 +176,15 @@ class MobileAppController {
         return render(text: [ appScore: newAppScore ] as JSON, contentType:'text/json')
     }
 
+    def searchTags() {
 
+        def tag = params.tag
+        def apps = MobileApp.listByTag(tag)
+
+        if (apps == null || apps.size() == 0) {
+            render(view: "notfound")
+            return
+        }
+        render(view: "searchtags", model:[apps:apps, tag:tag])
+    }
 }

@@ -115,3 +115,35 @@
 #mainAppsDiv a:visited {
   color: black;
 }
+
+#sortSelector {
+  display: inline-block;
+  width: 48%;
+}
+
+#tagSearch {
+  display: inline-block;
+  width: 48%;
+}
+
+#searchHeader {
+  margin: 15px;
+  background-color: lightgray;
+  font-size: 28px;
+  padding: 20px;
+}
+
+#topLogo {
+  display: table;
+}
+
+#topLogoInner {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 24px;
+  color: black;
+}
+
+#topLogoInner a,a:link,a:visited {
+  color: black;
+}

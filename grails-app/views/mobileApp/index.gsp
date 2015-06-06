@@ -20,6 +20,11 @@
             /><label for="chbByVisits">По популярности</label>
         </div>
     </div>
+    <div id="tagSearch">
+        <g:form name="tagSearchForm" url="[controller:'mobileApp', action:'searchTags']" method="GET">
+            <input type="text" name="tag" id="tagInput" size="40" placeholder="Введите тэг для поиска"/>
+        </g:form>
+    </div>
     <div id="mainAppsDiv">
         <g:each in="${apps}" var="app">
             <a href="/tstapp/mobileApp/show/${app.appId}">
