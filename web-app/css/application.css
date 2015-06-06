@@ -50,6 +50,68 @@
   font-size: 14px;
 }
 
+#imgDiv {
+  max-width: 460px;
+  max-height: 440px;
+}
+
+#imgDiv img {
+  max-width: 460px;
+  max-height: 440px;
+}
+
 #screenshotsDiv {
   margin-top: 12px;
+}
+
+/* index page */
+
+#topDiv {
+  width: 100%;
+}
+
+#topInnerDiv {
+  margin: 15px;
+  background-color: lightgray;
+  font-size: 32px;
+  padding: 20px;
+}
+
+#sortSelector {
+  width: 100%;
+  padding: 15px;
+}
+
+.sortDiv {
+  display: inline-block;
+  margin-right: 20px;
+  margin-left: 5px;
+}
+
+.sortDiv input {
+  margin-right: 10px;
+}
+
+#mainAppsDiv {
+  width: 100%;
+  background-color: white;
+}
+
+.appDiv {
+  display: inline-block;
+  margin: 10px;
+  padding: 5px;
+  max-width: 300px;
+}
+
+#mainAppsDiv a {
+  color: black;
+}
+
+#mainAppsDiv a:link {
+  color: black;
+}
+
+#mainAppsDiv a:visited {
+  color: black;
 }

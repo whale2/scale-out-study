@@ -12,13 +12,15 @@ class MobileAppController {
 
     def index() {
 
-        def apps = TopApps.appListByScore()
+        def order = params.byVisits
 
-        apps.each { app ->
-            if (app == null) return
-            println app.dump()
-        }
-        [apps:apps]
+        def apps
+        if (order)
+            apps = TopApps.appListByVisits()
+        else
+            apps = TopApps.appListByScore()
+
+        [apps:apps, byVisits: (order == null ? 0:1)]
     }
 
     def addapp() {
